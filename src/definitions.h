@@ -122,9 +122,10 @@ const char* serverIndex =
  "});"
  "</script>";
 
+WiFiClient wificlient;
 WiFiClientSecure wificlientsecure;
 // create MQTT object
-PubSubClient client(wificlientsecure);
+PubSubClient client(wificlient);
 // const char* host = "esp8266-webupdate";
 bool serial = HIGH;
 

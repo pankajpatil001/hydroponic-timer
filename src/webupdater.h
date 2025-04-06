@@ -4,6 +4,7 @@
 
 #include <ESP8266WiFi.h>
 #include <WiFiClientSecure.h>
+#include <WiFiClient.h>
 #include <ESP8266WebServer.h>
 #include <ESP8266HTTPUpdateServer.h>
 #include <ESP8266HTTPClient.h>
@@ -14,6 +15,7 @@
 
 extern WiFiClientSecure wificlientsecure;
 // create MQTT object
+// extern WiFiClient wificlient; //This is the client used for MQTT connection
 extern PubSubClient client;
 // extern const char* host;
 extern bool serial, wifiConnected;
