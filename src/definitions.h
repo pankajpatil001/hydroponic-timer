@@ -19,14 +19,12 @@ unsigned long tkeepUS = 500, tkeepUSpub = 500, tkeepRssi = 1000;
 unsigned long tkeepConnect=0, lastReconnectAttempt=0;
 unsigned int rssiTime = 6000;
 unsigned int connectTime = 5000;
-unsigned int usTime = 1000, uspubTime = 1000;
+unsigned int usTime = 5000, uspubTime = 1000;
 
 char valueStr[100];
 String incoming[100];
 uint8_t wifiReconnectAttemptCount=0;
-// const char* firmwareURL = "http://raw.githubusercontent.com/your-username/esp8266-firmware/main/releases/firmware.bin";
-// const char* firmwareURL = "https://github.com/pankajpatil001/movie_collection_app/raw/refs/heads/pankajpatil001-firmwares-1/firmware.bin";
-// const char* firmwareURL = "https://raw.githubusercontent.com/pankajpatil001/movie_collection_app/pankajpatil001-firmwares-1/firmware.bin";
+
 const char* firmwareURL = "https://raw.githubusercontent.com/pankajpatil001/parking-indicator/master/firmwares/nodemcuv2.bin";
 
 bool wifiConnected = LOW;
