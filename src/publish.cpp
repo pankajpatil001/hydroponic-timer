@@ -3,13 +3,13 @@
 void publishFeeds(){
   //------------------------RSSI-----------------------------
   if (millis() - tkeepRssi > rssiTime && client.connected()) {
-    String str = "Test Device IP "; 
+    String str = "Parking Sensor Device V2.2 IP "; 
     str+= WiFi.localIP().toString();
     str+= ", RSSI ";
     str+= (String)WiFi.RSSI();
     str+= " dBm";
     str.toCharArray(valueStr, 70);
-//    Serial.println(str);
+   Serial.println(str);
     client.publish(PREAMBLE MESSAGES, valueStr);
     tkeepRssi = millis();
   }
