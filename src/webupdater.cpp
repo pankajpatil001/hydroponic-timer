@@ -22,10 +22,16 @@ void performOTAUpdate() {
   }
 }
 
+void saveConfigCallback() {
+  if(serial) Serial.println("WiFiManager config freshly saved...!!!");
+  configFreshlySaved = HIGH;
+}
+
 void WiFi_httpStuff(){
 
   // WiFiManager handles the connection process
   WiFiManager wifiManager;
+  wifiManager.setSaveConfigCallback(saveConfigCallback);
 
   // Add a custom parameter
   WiFiManagerParameter custom_mqtt_server("server", "MQTT Server IP", mqttServer, 40);
@@ -39,11 +45,7 @@ void WiFi_httpStuff(){
     ESP.restart();
   }
 
-  Serial.println("WiFi Connected...!");
-  Serial.print("IP: ");
-  Serial.println(WiFi.localIP());
-
-  if (!wifiManager.getWiFiIsSaved()) {
+  if (configFreshlySaved) {
     // Portal was used; save user inputs to EEPROM
     strncpy(mqttServer, custom_mqtt_server.getValue(), sizeof(mqttServer));
     EEPROM.put(0, mqttServer);  // Write starting at address 0
