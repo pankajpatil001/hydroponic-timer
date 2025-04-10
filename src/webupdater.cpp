@@ -27,6 +27,11 @@ void WiFi_httpStuff(){
   // WiFiManager handles the connection process
   WiFiManager wifiManager;
 
+  // Add a custom parameter
+  WiFiManagerParameter custom_mqtt_server("server", "MQTT Server IP", mqttServer, 40);
+  wifiManager.addParameter(&custom_mqtt_server);
+
+
   // Blocks until connected or credentials provided via captive portal
   if (!wifiManager.autoConnect(ACCESS_POINT_NAME, ACCESS_POINT_PWD)) {
     Serial.println("WiFi failed to connect, restarting...");
@@ -38,6 +43,31 @@ void WiFi_httpStuff(){
   Serial.print("IP: ");
   Serial.println(WiFi.localIP());
 
+  if (!wifiManager.getWiFiIsSaved()) {
+    // Portal was used; save user inputs to EEPROM
+    strncpy(mqttServer, custom_mqtt_server.getValue(), sizeof(mqttServer));
+    EEPROM.put(0, mqttServer);  // Write starting at address 0
+    EEPROM.commit();
+
+    Serial.print("MQTT Server saved: ");
+    Serial.println(mqttServer);
+    Serial.println("Custom MQTT Server saved from portal input");
+  } else {
+    Serial.println("Using saved WiFi credentials; skipping EEPROM write");
+    EEPROM.begin(EEPROM_SIZE);
+    EEPROM.get(0, mqttServer);
+    Serial.print("Loaded MQTT Server from EEPROM: ");
+    Serial.println(mqttServer);  
+    if (strlen(mqttServer) == 0 || mqttServer[0] == 0xFF) {
+      // EEPROM is empty or uninitialized
+      Serial.println("EEPROM empty, using fallback MQTT server IP");
+      strcpy(mqttServer, SERVER);  // fallback value
+    
+      // Optional: trigger an API call here to fetch actual IP
+      // OR start WiFiManager portal to let user enter it
+    }
+  }
+  
   WiFi.mode(WIFI_STA);
 
   httpUpdater.setup(&httpServer);

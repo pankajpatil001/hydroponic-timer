@@ -11,6 +11,7 @@
 #include <ESP8266httpUpdate.h>
 #include <WiFiManager.h>
 #include <PubSubClient.h>
+#include <EEPROM.h>
 #include "defines.h"
 
 extern WiFiClientSecure wificlientsecure;
@@ -29,6 +30,7 @@ extern const char* serverIndex;
 
 // Your GitHub-hosted firmware URL
 extern const char* firmwareURL;
+extern char mqttServer[40];
 
 void performOTAUpdate();
 void WiFi_httpStuff();

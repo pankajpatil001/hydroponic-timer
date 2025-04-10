@@ -1,24 +1,25 @@
-/*-------- WiFi Connection Settings -------------*/
-#define ssid1   "ModiInfonet_PKD"
-#define pwd1    "@##pankaj##@"
+// /*-------- WiFi Connection Settings -------------*/
+// #define ssid1   "ModiInfonet_PKD"
+// #define pwd1    "@##pankaj##@"
 
-#define ssid2    "Bajrangbali2"
-#define pwd2    "11JaiShreeRam11"
+// #define ssid2    "Bajrangbali2"
+// #define pwd2    "11JaiShreeRam11"
 
-#define ssid3   "Pankaj's iPhone"
-#define pwd3    "iPhone91"
+// #define ssid3   "Pankaj's iPhone"
+// #define pwd3    "iPhone91"
 
-#define ssid5    "Bajrangbali5"
-#define pwd5    "11JaiShreeRam11"
+// #define ssid5    "Bajrangbali5"
+// #define pwd5    "11JaiShreeRam11"
 
-#define ssid7   "Redmi Note 4"
-#define pwd7    "ILPatil64"
+// #define ssid7   "Redmi Note 4"
+// #define pwd7    "ILPatil64"
 
 
 /*-------- Important IOT Device Settings ---------*/
 #define deviceName        "Test Device" //Specify the name to be seen on network
 #define MQTT_USERNAME     "test_mqtt"
 #define MQTT_KEY          "test_pass"
+#define EEPROM_SIZE       64 //Size of EEPROM in bytes
 #define SERVER            "192.168.0.111" //"192.168.1.105"
 #define SERVERPORT        1883
 

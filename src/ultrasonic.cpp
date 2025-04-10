@@ -26,6 +26,7 @@ uint8_t dist(uint16_t dly) {
 //   return avg;
 // }
 
+// TODO: Make this function aynchronous by removing delay from it
 uint16_t filteredAvgDist(uint16_t dly, uint8_t sample, uint8_t tolerance = 5, uint8_t minClusterSize = 3) {
   uint16_t readings[MAX_SAMPLES];
 

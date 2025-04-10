@@ -24,6 +24,7 @@ unsigned int usTime = 5000, uspubTime = 1000;
 char valueStr[100];
 String incoming[100];
 uint8_t wifiReconnectAttemptCount=0;
+char mqttServer[40];
 
 const char* firmwareURL = "https://raw.githubusercontent.com/pankajpatil001/parking-indicator/master/firmwares/nodemcuv2.bin";
 
