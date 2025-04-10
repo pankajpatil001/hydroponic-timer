@@ -21,7 +21,7 @@ extern PubSubClient client;
 // extern const char* host;
 extern bool serial, wifiConnected;
 extern bool configFreshlySaved;
-
+extern char SERVER[64];
 
 // extern ESP8266WiFiMulti wifiMulti;
 extern ESP8266WebServer httpServer; //Choose any number you want, just add this after your ip adrs

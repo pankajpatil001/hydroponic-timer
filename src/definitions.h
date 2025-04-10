@@ -8,6 +8,7 @@
 #include "ultrasonic.h"
 #include "defines.h"
 #include "publish.h"
+#include "registerDevice.h"
 // #include <WiFiManager.h>
 
 //--------------------Ultrasonic---------------------
@@ -22,6 +23,7 @@ unsigned int connectTime = 5000;
 unsigned int usTime = 5000, uspubTime = 1000;
 
 char valueStr[100];
+char SERVER[64] = "192.168.0.111";
 String incoming[100];
 uint8_t wifiReconnectAttemptCount=0;
 char mqttServer[40];
