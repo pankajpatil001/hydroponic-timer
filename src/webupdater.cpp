@@ -39,7 +39,7 @@ void WiFi_httpStuff(){
     ESP.restart();
   }
 
-  Serial.println("WiFi Connected!");
+  Serial.println("WiFi Connected...!");
   Serial.print("IP: ");
   Serial.println(WiFi.localIP());
 
