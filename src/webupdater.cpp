@@ -56,7 +56,6 @@ void WiFi_httpStuff(){
     Serial.println("Custom MQTT Server saved from portal input");
   } else {
     Serial.println("Using saved WiFi credentials; skipping EEPROM write");
-    EEPROM.begin(EEPROM_SIZE);
     EEPROM.get(0, mqttServer);
     Serial.print("Loaded MQTT Server from EEPROM: ");
     Serial.println(mqttServer);  
@@ -67,7 +66,7 @@ void WiFi_httpStuff(){
     
       // Optional: trigger an API call here to fetch actual IP
       // OR start WiFiManager portal to let user enter it
-    }
+    } else strcpy(SERVER, mqttServer); // Use the loaded value for MQTT server
   }
   
   WiFi.mode(WIFI_STA);

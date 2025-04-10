@@ -14,6 +14,8 @@ void setup() {
   if(serial) Serial.println();
   if(serial) Serial.println("Initiating Device...");
   delay(10);
+
+  EEPROM.begin(EEPROM_SIZE);
   
   WiFi_httpStuff(); //handles everything wrt wifi and http server
 
