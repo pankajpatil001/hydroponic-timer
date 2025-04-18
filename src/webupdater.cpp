@@ -82,6 +82,10 @@ void WiFi_httpStuff(){
     httpServer.send(200, "text/plain", "Starting OTA...");
     performOTAUpdate();  // This will reboot if successful
   });
+  httpServer.on("/register", HTTP_GET, []() {
+    httpServer.send(200, "text/plain", "Register...");
+    registerDevice();  // This will reboot if successful
+  });
   httpServer.on("/serverIndex", HTTP_GET, []() {
     if (!httpServer.authenticate(OTA_USERNAME, OTA_PASSWORD)) {
       return httpServer.requestAuthentication();

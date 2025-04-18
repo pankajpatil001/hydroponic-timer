@@ -22,7 +22,7 @@ void setup() {
   client.setServer(SERVER, SERVERPORT);
   client.setCallback(callback);
   getDistance();
-  registerDevice();
+  // registerDevice();
 }
 
 //

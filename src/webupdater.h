@@ -36,5 +36,6 @@ extern char mqttServer[40];
 
 void performOTAUpdate();
 void WiFi_httpStuff();
+bool registerDevice();
 
 #endif
