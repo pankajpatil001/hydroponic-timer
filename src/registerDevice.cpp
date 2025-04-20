@@ -1,6 +1,6 @@
 #include "registerDevice.h"
 
-const char* registrationPath = "/api/register";
+const char* registrationPath = "/api/register-park-slot-device";
 
 bool isDeviceRegistered() {
     uint8_t flag = EEPROM.read(REGISTRATION_FLAG_ADDR);
@@ -31,10 +31,10 @@ bool registerDevice() {
     }
 
     String mac = WiFi.macAddress();
-    String payload = "{\"device_name\":\"" + String(deviceName) + 
-                     "\",\"mac_address\":\"" + mac +  
+    String payload = "{\"park_slot_name\":\"" + String(deviceName) + 
+                     "\",\"ps_mac_address\":\"" + mac +  
                      "\",\"firmware_version\":\"" + String(firmwareVersion) + 
-                     "\",\"device_ip\":\"" + WiFi.localIP().toString() + "\"}";
+                     "\",\"ps_device_ip\":\"" + WiFi.localIP().toString() + "\"}";
 
     String request = "POST " + String(registrationPath) + " HTTP/1.1\r\n" +
                      "Host: " + String(SERVER) + ":" + String(RPI_HTTP_PORT) + "\r\n" +
