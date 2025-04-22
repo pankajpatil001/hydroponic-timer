@@ -4,13 +4,22 @@ const char* registrationPath = "/api/register-park-slot-device";
 
 bool isDeviceRegistered() {
     uint8_t flag = EEPROM.read(REGISTRATION_FLAG_ADDR);
+    if (serial) Serial.print("Registration flag: ");
+    if (serial) Serial.println(flag);
+    if (flag == 0) if (serial) Serial.println("Device not registered.");
+    if (flag == 1) if (serial) Serial.println("Device already registered.");
     return flag == 1;
 }
 
 void saveRegistrationStatus(const String& uuid) {
+    if (serial) Serial.println("Saving registration status to EEPROM...");
     EEPROM.write(REGISTRATION_FLAG_ADDR, 1); // Set registration flag
     EEPROM.put(UUID_START_ADDR, uuid); // Save UUID to EEPROM
     EEPROM.commit(); // Commit changes to EEPROM
+    if (serial) Serial.println("Registration status saved.");
+    if (serial) Serial.print("Device UUID: ");
+    if (serial) Serial.println(uuid);
+    if (serial) Serial.println("Registration flag set to 1.");
 }
 
 String getDeviceUUID() {
