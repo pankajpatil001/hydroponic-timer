@@ -48,11 +48,16 @@ bool registerDevice() {
 
     if (serial) Serial.println("-----------------"); // Print separator
     //wait for server response
-    while (wificlient.available()) {
+    // while (wificlient.available()) {
+    //     String line = wificlient.readStringUntil('\n');
+    //     if (line.length() == 0) break; // End of headers
+    //     if (line == "\r" || line == "") break;
+    //     if (serial) Serial.println(line); // Print server response
+    // }
+    while (wificlient.connected()) {
         String line = wificlient.readStringUntil('\n');
-        if (line.length() == 0) break; // End of headers
-        if (line == "\r" || line == "") break;
-        if (serial) Serial.println(line); // Print server response
+        if (line == "\r" || line.length() == 0) break;
+        if (serial) Serial.println(line);
     }
     if (serial) Serial.println("-----------------"); // Print separator
 
