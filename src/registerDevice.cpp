@@ -75,6 +75,10 @@ bool registerDevice() {
         return false;
     }
 
+    Serial.println("Parsed JSON document:");
+    serializeJsonPretty(doc, Serial);
+    Serial.println();  // Just for clarity in serial output
+
     if (doc.containsKey("device_uuid")) {
         String device_uuid = doc["device_uuid"];
         saveRegistrationStatus(device_uuid);
