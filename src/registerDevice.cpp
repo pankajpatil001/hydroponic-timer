@@ -75,8 +75,8 @@ bool registerDevice() {
         return false;
     }
 
-    if (doc.containsKey("park_slot_uuid")) {
-        String device_uuid = doc["park_slot_uuid"];
+    if (doc.containsKey("device_uuid")) {
+        String device_uuid = doc["device_uuid"];
         saveRegistrationStatus(device_uuid);
         if (serial) Serial.println("✅ Registered with device_uuid: " + device_uuid);
         return true;
