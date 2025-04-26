@@ -14,7 +14,11 @@ bool isDeviceRegistered() {
 void saveRegistrationStatus(const String& uuid) {
     if (serial) Serial.println("Saving registration status to EEPROM...");
     EEPROM.write(REGISTRATION_FLAG_ADDR, 1); // Set registration flag
-    EEPROM.put(UUID_START_ADDR, uuid); // Save UUID to EEPROM
+    // EEPROM.put(UUID_START_ADDR, uuid); // Save UUID to EEPROM
+    for (unsigned int i = 0; i < uuid.length(); i++) {
+        EEPROM.write(UUID_START_ADDR + i, uuid[i]);
+    }
+    EEPROM.write(UUID_START_ADDR + uuid.length(), 0); // Null-terminate manually
     EEPROM.commit(); // Commit changes to EEPROM
     if (serial) Serial.println("Registration status saved.");
     if (serial) Serial.print("Device UUID: ");

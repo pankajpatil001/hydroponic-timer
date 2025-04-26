@@ -12,7 +12,7 @@
 extern WiFiClient wificlient; //This is the client used for WiFi / HTTP connection
 extern bool serial;
 extern char SERVER[64];
-extern char deviceUUID[40]; // UUID for the device
+extern char deviceUUID[36]; // UUID for the device
 bool registerDevice();
 bool isDeviceRegistered();
 String getDeviceUUID();
