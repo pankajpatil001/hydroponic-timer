@@ -18,12 +18,18 @@ void publishFeeds(){
   // if (millis() - tkeepUSpub > uspubTime && client.connected() && prevDistance != distance) {
   if (millis() - tkeepUSpub > uspubTime && client.connected()) {
 
+    char topic[256];
+    snprintf(topic, sizeof(topic), "%s%s%s", PREAMBLE, DISTANCE, deviceUUID);
     // String str = "Water level is "; 
     String str = (String)distance;
     // str+= " cm\n";
     str.toCharArray(valueStr, 10);
 //    Serial.println(str);
-    if(distance < 500) client.publish(PREAMBLE PARKINDCTR, valueStr);
+    if (serial) Serial.print("Publishing to topic: ");
+    if (serial) Serial.println(topic);
+    if (serial) Serial.print("Distance: ");
+    if (serial) Serial.println(str);
+    if(distance < 500) client.publish(topic, valueStr);
     // prevDistance = distance;
     tkeepUSpub = millis();
   }

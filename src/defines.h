@@ -31,8 +31,10 @@
 #define UUID_LENGTH       36 //Size of UUID in bytes
 
 #define PREAMBLE          "patilect/"
-#define MESSAGES          "feeds/messages" //for specific messages related to batches
-#define PARKINDCTR        "sensor/parkindicator"
+#define MESSAGES          "feeds/messages/" //for specific messages related to batches
+// #define PARKINDCTR        "sensor/parkindicator"
+#define DISTANCE          "sensor/distance/"
+#define PARKSLOTSTATUS    "sensor/parkslotstatus/"
 
 #define ACCESS_POINT_NAME "ESP-Access-Point"
 #define ACCESS_POINT_PWD  "1234567890" //Password for access point

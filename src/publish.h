@@ -9,7 +9,7 @@ extern unsigned long tkeepRssi, tkeepUSpub;
 extern unsigned int rssiTime, uspubTime;
 extern bool firstTime, connection;
 extern PubSubClient client;
-extern char valueStr[100];
+extern char valueStr[100], deviceUUID[36]; // UUID for the device
 extern unsigned int distance, prevDistance;
 extern bool serial;
 
