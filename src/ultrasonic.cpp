@@ -83,11 +83,33 @@ void getDistance() {
       parkSpaceOccupied = LOW;
       digitalWrite(parkFree, HIGH);
       digitalWrite(parkOcc, LOW);
+      if (client.connected()) {
+        char topic[256];
+        snprintf(topic, sizeof(topic), "%s%s%s", PREAMBLE, PARKSLOTSTATUS, deviceUUID);
+        String str = "AVL"; // AVL means free
+        str.toCharArray(valueStr, 10);
+        if (serial) Serial.print("Publishing to topic: ");
+        if (serial) Serial.println(topic);
+        if (serial) Serial.print("Status: ");
+        if (serial) Serial.println(str);
+        client.publish(topic, valueStr);
+      }
      }
     else if (!parkSpaceOccupied && distance < parkSpaceVehicleDistance) {
       parkSpaceOccupied = HIGH;
       digitalWrite(parkFree, LOW);
       digitalWrite(parkOcc, HIGH);
+      if (client.connected()) {
+        char topic[256];
+        snprintf(topic, sizeof(topic), "%s%s%s", PREAMBLE, PARKSLOTSTATUS, deviceUUID);
+        String str = "OCC"; // OCC means occupied
+        str.toCharArray(valueStr, 10);
+        if (serial) Serial.print("Publishing to topic: ");
+        if (serial) Serial.println(topic);
+        if (serial) Serial.print("Status: ");
+        if (serial) Serial.println(str);
+        client.publish(topic, valueStr);
+      }
      }
     tkeepUS = millis();
   }
