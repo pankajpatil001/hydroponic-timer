@@ -33,6 +33,7 @@ const char* firmwareURL = "https://raw.githubusercontent.com/pankajpatil001/park
 
 bool wifiConnected = LOW;
 bool mqttConnected = LOW;
+char deviceUUID[40]; // UUID for the device
 //--------------------------------------------------------------------------------
 bool firstTime = HIGH, connection = LOW;
 //-----------------------------------------------------------------------------------------------

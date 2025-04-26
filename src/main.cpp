@@ -22,7 +22,12 @@ void setup() {
   client.setServer(SERVER, SERVERPORT);
   client.setCallback(callback);
   getDistance();
-  registerDevice();
+  if (!isDeviceRegistered()) registerDevice();
+  String str = getDeviceUUID();
+  str.toCharArray(deviceUUID, UUID_LENGTH+1); // Store UUID in global variable
+  if (serial) Serial.print("Device UUID: ");
+  if (serial) Serial.println(deviceUUID);
+  if (serial) Serial.println("Device registered successfully.");
 }
 
 //
