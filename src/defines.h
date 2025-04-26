@@ -30,7 +30,7 @@
 #define UUID_START_ADDR   66 //Starting address for UUID
 #define UUID_LENGTH       36 //Size of UUID in bytes
 
-#define PREAMBLE          "patilect/"
+#define PREAMBLE          "parksense/"
 #define MESSAGES          "feeds/messages/" //for specific messages related to batches
 // #define PARKINDCTR        "sensor/parkindicator"
 #define DISTANCE          "sensor/distance/"
