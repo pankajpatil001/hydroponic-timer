@@ -50,6 +50,18 @@ bool registerDevice() {
         return false;
     }
 
+    if (deviceName[0] == '\0') {
+        if (serial) Serial.println("Device name is empty. Cannot register.");
+        if (serial) Serial.println("Complete the device setup first by visiting:.");
+        if (serial) {
+            Serial.print("http://");
+            Serial.print(WiFi.localIP());
+            Serial.print("/devicesetup/");
+            Serial.println(defaultUUID);
+        }
+        return false;
+    }
+
     String mac = WiFi.macAddress();
     String payload = "{\"park_slot_name\":\"" + String(deviceName) + 
                      "\",\"ps_mac_address\":\"" + mac +  

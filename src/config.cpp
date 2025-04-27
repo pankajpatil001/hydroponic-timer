@@ -2,10 +2,19 @@
 
 // Helper to read char array from EEPROM
 void readFromEEPROM(int startAddr, char* dest, int size) {
+    bool allFF = true;
     for (int i = 0; i < size; i++) {
-      dest[i] = EEPROM.read(startAddr + i);
+        byte val = EEPROM.read(startAddr + i);
+        dest[i] = val;
+        if (val != 0xFF && val != 0x00) {  // valid character
+          allFF = false;
+        }
     }
     dest[size - 1] = '\0'; // Null-terminate
+
+    if (allFF) {
+      strcpy(dest, ""); // <<< whatever default you want
+    }
   }
   
   // Helper to write char array to EEPROM
