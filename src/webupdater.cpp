@@ -3,7 +3,7 @@
 String setUpForm() {
   String page = "<!DOCTYPE html><html><head><title>Device Config</title>";
   page += "<style>body{font-family:sans-serif;max-width:400px;margin:auto;padding:1em;}input{width:100%;margin-bottom:1em;padding:0.5em;}</style>";
-  page += "</head><body><h2>Configure Device</h2><form method='POST' action='/save-device-setup'>";
+  page += "</head><body><h2>Configure Device</h2><form method='POST' action='/save-device-setup/" + String(deviceUUID) + "'>";
   page += "<label>RPI IP Address:</label><input name='rpiServer' value='" + String(rpiServer) + "' required>";
   page += "<label>Device Name:</label><input name='deviceName' value='" + String(deviceName) + "' required>";
   page += "<label>MQTT Username:</label><input name='mqttUsername' value='" + String(mqttUsername) + "' required>";
