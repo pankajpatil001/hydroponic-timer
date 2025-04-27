@@ -27,11 +27,18 @@ void saveRegistrationStatus(const String& uuid) {
 }
 
 String getDeviceUUID() {
+    bool eepromBlank = true;
     String uuid;
     for (int i = UUID_START_ADDR; i < UUID_START_ADDR + UUID_LENGTH; i++) {
         char c = EEPROM.read(i);
+        if (c != 0xFF) eepromBlank = false; // Check if EEPROM is not blank
         if (c == 0) break; // Stop at null terminator
         uuid += c;
+    }
+
+    if (eepromBlank || uuid.length() == 0) {
+        if (serial) Serial.println("EEPROM is blank or UUID not found.");
+        return defaultUUID; // Return empty string if EEPROM is blank or UUID not found
     }
     return uuid;
 }

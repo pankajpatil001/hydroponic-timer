@@ -21,7 +21,7 @@ extern PubSubClient client;
 // extern const char* host;
 extern bool serial, wifiConnected;
 extern bool configFreshlySaved;
-extern char SERVER[64];
+extern char SERVER[16];
 
 // extern ESP8266WiFiMulti wifiMulti;
 extern ESP8266WebServer httpServer; //Choose any number you want, just add this after your ip adrs
@@ -32,10 +32,19 @@ extern const char* serverIndex;
 
 // Your GitHub-hosted firmware URL
 extern const char* firmwareURL;
-extern char mqttServer[40];
+
+// Parameters from intial setup
+extern char rpiServer[RPI_IP_SIZE];
+extern char deviceName[DEVICE_NAME_SIZE];
+extern char mqttUsername[MQTT_USERNAME_SIZE];
+extern char mqttKey[MQTT_KEY_SIZE];
+extern char deviceUUID[36]; // UUID for the device
 
 void performOTAUpdate();
 void WiFi_httpStuff();
 bool registerDevice();
+void saveConfig();
+void startHTTPServer();
+void setupHTTPRoutes();
 
 #endif

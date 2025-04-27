@@ -16,6 +16,7 @@ extern PubSubClient client;
 extern bool serial, connection;
 extern unsigned long tkeepConnect, lastReconnectAttempt;
 extern unsigned int connectTime;
+extern char mqttUsername[44], mqttKey[50]; // MQTT username and password
 // extern ESP8266WiFiMulti wifiMulti;
 void connectSubscribe();
 // void getFeedLatest();

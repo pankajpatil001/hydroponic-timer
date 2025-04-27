@@ -9,6 +9,7 @@
 #include "defines.h"
 #include "publish.h"
 #include "registerDevice.h"
+#include "config.h"
 // #include <WiFiManager.h>
 
 //--------------------Ultrasonic---------------------
@@ -23,17 +24,23 @@ unsigned int connectTime = 5000;
 unsigned int usTime = 5000, uspubTime = 2000;
 
 char valueStr[100];
-char SERVER[64] = "192.168.0.111";
+char SERVER[16] = "192.168.0.111";
 String incoming[100];
 uint8_t wifiReconnectAttemptCount=0;
-char mqttServer[40];
+
+// Parameters from intial setup
+char rpiServer[RPI_IP_SIZE];
+char deviceName[DEVICE_NAME_SIZE] = "Test Device"; //Specify the name to be seen on network
 bool configFreshlySaved = LOW;
+char mqttUsername[MQTT_USERNAME_SIZE] = "test_mqtt";
+char mqttKey[MQTT_KEY_SIZE] = "test_pass";
 
 const char* firmwareURL = "https://raw.githubusercontent.com/pankajpatil001/parking-indicator/master/firmwares/nodemcuv2.bin";
 
 bool wifiConnected = LOW;
 bool mqttConnected = LOW;
-char deviceUUID[36]; // UUID for the device
+char deviceUUID[UUID_LENGTH]; // UUID for the device
+String defaultUUID = "parksense-default-iot-uuid"; // Default UUID for the device
 //--------------------------------------------------------------------------------
 bool firstTime = HIGH, connection = LOW;
 //-----------------------------------------------------------------------------------------------

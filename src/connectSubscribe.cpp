@@ -29,7 +29,7 @@ void connectSubscribe(){
       wifiReconnectAttemptCount=0;
       if(serial) Serial.println("Attempting MQTT connection...");
       // Attempt to connect
-      if (client.connect("", MQTT_USERNAME, MQTT_KEY)) {
+      if (client.connect("", mqttUsername, mqttKey)) {
         if(serial) Serial.println("connected");
         // ... and resubscribe
   

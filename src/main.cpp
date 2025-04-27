@@ -21,6 +21,14 @@ void setup() {
 
   client.setServer(SERVER, SERVERPORT);
   client.setCallback(callback);
+
+  loadConfig(); // Load saved config at boot
+
+  Serial.println("Loaded Configuration:");
+  Serial.print("RPI IP Address: "); Serial.println(rpiServer);
+  Serial.print("Device Name: "); Serial.println(deviceName);
+  Serial.print("MQTT Username: "); Serial.println(mqttUsername);
+  Serial.print("MQTT Key: "); Serial.println(mqttKey);
   // getDistance();
   if (!isDeviceRegistered()) registerDevice();
   String str = getDeviceUUID();
@@ -28,6 +36,9 @@ void setup() {
   if (serial) Serial.print("Device UUID: ");
   if (serial) Serial.println(deviceUUID);
   if (serial) Serial.println("Device registered successfully.");
+
+  setupHTTPRoutes();
+  startHTTPServer(); // Start the HTTP server after WiFi connection
 }
 
 //
