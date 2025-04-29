@@ -46,6 +46,8 @@ String getDeviceUUID() {
 bool registerDevice() {
     if (serial) Serial.println("Registering Device...");
     if (serial) {
+        Serial.print("Default server: ");
+        Serial.println(SERVER);
         Serial.print("Connecting to: ");
         Serial.println(rpiServer);
         Serial.print(" Port: ");
@@ -75,11 +77,14 @@ bool registerDevice() {
                      "\",\"ps_device_ip\":\"" + WiFi.localIP().toString() + "\"}";
 
     String request = "POST " + String(registrationPath) + " HTTP/1.1\r\n" +
-                     "Host: " + String(SERVER) + ":" + String(RPI_HTTP_PORT) + "\r\n" +
+                     "Host: " + String(rpiServer) + ":" + String(RPI_HTTP_PORT) + "\r\n" +
                      "Content-Type: application/json\r\n" +
                      "Content-Length: " + String(payload.length()) + "\r\n" +
                      "Connection: close\r\n\r\n" +
                      payload;
+
+    if (serial) Serial.println("Sending registration request:");
+    if (serial) Serial.println(request); // Print request for debugging
     wificlient.print(request);
     wificlient.flush(); 
     delay(100);
