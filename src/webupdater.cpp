@@ -87,7 +87,7 @@ void setupHTTPRoutes() {
   if (serial) Serial.println("Setting up HTTP routes...");
   
   String loginPath = String("/login/") + String(deviceUUID);
-  String triggerUpdatePath = String("/triggerUpdate/") + String(deviceUUID);
+  String triggerUpdatePath = String("/trigger-update/") + String(deviceUUID);
   String registerPath = String("/register/") + String(deviceUUID);
   String resetFactorySettingsPath = String("/reset-to-factory-settings/") + String(deviceUUID);
   String deviceSetupPath = String("/devicesetup/") + String(deviceUUID);
