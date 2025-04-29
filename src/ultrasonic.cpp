@@ -12,8 +12,8 @@ uint8_t dist(uint16_t dly) {
   
   duration = pulseIn(echoP, HIGH);   //Read echo pin, time in microseconds
   d = duration*0.0343/2;        //Calculating actual/real distance
-  if(serial) Serial.print("Temp Distance = ");        //Output distance on arduino serial monitor 
-  if(serial) Serial.println(d);
+  // if(serial) Serial.print("Temp Distance = ");        //Output distance on arduino serial monitor 
+  // if(serial) Serial.println(d);
   delay(dly);
   return d;
 }
