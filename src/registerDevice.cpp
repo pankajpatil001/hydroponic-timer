@@ -45,7 +45,13 @@ String getDeviceUUID() {
 
 bool registerDevice() {
     if (serial) Serial.println("Registering Device...");
-    if (!wificlient.connect(SERVER, RPI_HTTP_PORT)) {
+    if (serial) {
+        Serial.print("Connecting to: ");
+        Serial.println(rpiServer);
+        Serial.print(" Port: ");
+        Serial.println(RPI_HTTP_PORT);
+    }
+    if (!wificlient.connect(rpiServer, RPI_HTTP_PORT)) {
         if (serial) Serial.println("Failed to connect to server for registration.");
         return false;
     }
