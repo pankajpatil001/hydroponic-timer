@@ -54,10 +54,10 @@ bool registerDevice() {
         Serial.println(RPI_HTTP_PORT);
     }
 
-    // if (!wificlient.connect(rpiServer, RPI_HTTP_PORT)) {
-    //     if (serial) Serial.println("Failed to connect to server for registration.");
-    //     return false;
-    // }
+    if (!wificlient.connect(rpiServer, RPI_HTTP_PORT)) {
+        if (serial) Serial.println("Failed to connect to server for registration.");
+        return false;
+    }
 
     if (deviceName[0] == '\0') {
         if (serial) Serial.println("Device name is empty. Cannot register.");
@@ -79,6 +79,7 @@ bool registerDevice() {
 
     String request = "POST " + String(registrationPath) + " HTTP/1.1\r\n" +
                      "Host: " + String(rpiServer) + ":" + String(RPI_HTTP_PORT) + "\r\n" +
+                    //  "Host: " + "100.110.196.11" + ":" + String(RPI_HTTP_PORT) + "\r\n" + // this won't work as vpn network cannot be accessed from outside (esp)
                      "Content-Type: application/json\r\n" +
                      "Content-Length: " + String(payload.length()) + "\r\n" +
                      "Connection: close\r\n\r\n" +
