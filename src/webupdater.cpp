@@ -101,6 +101,9 @@ void setupHTTPRoutes() {
     httpServer.send(200, "text/html", loginIndex);
   });
   httpServer.on(triggerUpdatePath, HTTP_GET, []() {
+    if (!httpServer.authenticate(OTA_USERNAME, OTA_PASSWORD)) {
+      return httpServer.requestAuthentication();
+    }
     httpServer.sendHeader("Connection", "close");
     httpServer.send(200, "text/plain", "Starting OTA...");
     performOTAUpdate();  // This will reboot if successful
