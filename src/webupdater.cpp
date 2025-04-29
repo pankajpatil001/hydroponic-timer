@@ -37,6 +37,12 @@ void handleSaveDeviceSetup() {
   delay(1000);
   ESP.restart();
 }
+
+void restartDevice() {
+  if (serial) Serial.println("🔄 Restarting device...");
+  delay(1000);
+  ESP.restart();
+}
 void resetToFactorySettings() {
   if(serial) Serial.println("🔄 Resetting to factory settings...");
   WiFiManager wifiManager;
@@ -93,7 +99,7 @@ void setupHTTPRoutes() {
   String deviceSetupPath = String("/devicesetup/") + String(deviceUUID);
   String saveDeviceSetupPath = String("/save-device-setup/") + String(deviceUUID);
   String otaUpdatePath = String("/ota-update/") + String(deviceUUID);
-  // String loginPath = String("/login/") + String(deviceUUID);
+  String restartDevicePath = String("/restart-device/") + String(deviceUUID);
 
   httpServer.on(loginPath.c_str(), HTTP_GET, []() {
     if (serial) Serial.println("Login page requested.");
@@ -109,9 +115,20 @@ void setupHTTPRoutes() {
     performOTAUpdate();  // This will reboot if successful
   });
   httpServer.on(registerPath, HTTP_GET, []() {
+    if (!httpServer.authenticate(OTA_USERNAME, OTA_PASSWORD)) {
+      return httpServer.requestAuthentication();
+    }
     httpServer.sendHeader("Connection", "close");
     httpServer.send(200, "text/plain", "Register...");
     registerDevice();  
+  });
+  httpServer.on(restartDevicePath, HTTP_GET, []() {
+    if (!httpServer.authenticate(OTA_USERNAME, OTA_PASSWORD)) {
+      return httpServer.requestAuthentication();
+    }
+    httpServer.sendHeader("Connection", "close");
+    httpServer.send(200, "text/plain", "Restarting Parking Slot Sensor...");
+    restartDevice();  
   });
   httpServer.on(resetFactorySettingsPath, HTTP_GET, []() {
     if (!httpServer.authenticate(OTA_USERNAME, OTA_PASSWORD)) {

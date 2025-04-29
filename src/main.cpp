@@ -35,7 +35,18 @@ void setup() {
   str.toCharArray(deviceUUID, UUID_LENGTH+1); // Store UUID in global variable
   if (serial) Serial.print("Device UUID: ");
   if (serial) Serial.println(deviceUUID);
-  if (serial) Serial.println("Device registered successfully.");
+  if (String(deviceUUID) == String(defaultUUID)) {
+    if (serial) Serial.println("Device UUID is default. Please register the device.");
+    if (serial) Serial.println("Complete the device setup first by visiting:.");
+    if (serial) {
+      Serial.print("http://");
+      Serial.print(WiFi.localIP());
+      Serial.print("/devicesetup/");
+      Serial.println(defaultUUID);
+    }
+  } else {
+    if (serial) Serial.println("Device registered successfully.");
+  }
 
   setupHTTPRoutes();
   startHTTPServer(); // Start the HTTP server after WiFi connection
