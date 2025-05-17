@@ -2,6 +2,7 @@
 
 void setup() {
   pinMode(LED, OUTPUT);
+  pinMode(relayPin, OUTPUT); // Set relay pin as output
   
   pinMode(trigP, OUTPUT);  // Sets the trigPin as an Output
   pinMode(echoP, INPUT);   // Sets the echoPin as an Input
