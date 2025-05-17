@@ -27,7 +27,15 @@ void connectSubscribe(){
     }
     else {
       wifiReconnectAttemptCount=0;
-      if(serial) Serial.println("Attempting MQTT connection...");
+      if(serial) {
+        Serial.println("Attempting MQTT connection...");
+        Serial.print("MQTT Server: ");
+        Serial.println(rpiServer);
+        Serial.print("MQTT Username: ");
+        Serial.println(mqttUsername);
+        Serial.print("MQTT Key: ");
+        Serial.println(mqttKey);
+      }
       // Attempt to connect
       if (client.connect("", mqttUsername, mqttKey)) {
         if(serial) Serial.println("connected");
