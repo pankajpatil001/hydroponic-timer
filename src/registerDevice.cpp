@@ -132,13 +132,6 @@ bool registerDevice() {
         Serial.print(" Port: ");
         Serial.println(RPI_HTTP_PORT);
     }
-    // wificlient.println("GET /test HTTP/1.1");
-    // wificlient.print("Host: ");
-    // wificlient.println(rpiServer);
-    // wificlient.print(":");
-    // wificlient.println(RPI_HTTP_PORT);
-    // wificlient.println("Connection: close");
-    // wificlient.println();
 
     if (!wificlient.connect(rpiServer, RPI_HTTP_PORT)) {
         if (serial) Serial.println("Failed to connect to server for registration.");

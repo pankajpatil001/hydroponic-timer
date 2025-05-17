@@ -12,6 +12,7 @@
 #include <WiFiManager.h>
 #include <PubSubClient.h>
 #include <EEPROM.h>
+#include <ArduinoJson.h>
 #include "defines.h"
 
 extern WiFiClientSecure wificlientsecure;

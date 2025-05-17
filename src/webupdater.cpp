@@ -94,6 +94,45 @@ void startHTTPServer() {
   if (serial) Serial.println("HTTP server started.");
 }
 
+void testRegistration() {
+  if (serial) Serial.println("Testing registration...");
+  if (serial) Serial.println("Connecting to server: " + String(rpiServer) + ":" + String(RPI_HTTP_PORT));
+  HTTPClient http;
+  WiFiClient client;
+
+  String payload = "{\"park_slot_name\":\"TestDevice\",\"ps_mac_address\":\"" + WiFi.macAddress() +
+                   "\",\"firmware_version\":\"1.0.0\",\"ps_device_ip\":\"" + WiFi.localIP().toString() + "\"}";
+
+  String url = "http://" + String(rpiServer) + ":5000/test-register-device";
+  Serial.println("Posting to: " + url);
+  Serial.println("Payload: " + payload);
+
+  http.begin(client, url);
+  http.addHeader("Content-Type", "application/json");
+
+  int httpCode = http.POST(payload);
+  String response = http.getString();
+
+  Serial.println("HTTP code: " + String(httpCode));
+  Serial.println("Response: " + response);
+
+  http.end();
+
+  if (httpCode == HTTP_CODE_OK) {
+    StaticJsonDocument<128> doc;
+    DeserializationError error = deserializeJson(doc, response);
+
+    if (!error && doc.containsKey("device_uuid")) {
+      String uuid = doc["device_uuid"];
+      Serial.println("✅ Received UUID: " + uuid);
+    } else {
+      Serial.println("❌ Failed to parse UUID from response.");
+    }
+  } else {
+    Serial.println("❌ HTTP request failed.");
+  }
+}
+
 void setupHTTPRoutes() {
   if (serial) Serial.println("Setting up HTTP routes...");
   
@@ -105,6 +144,7 @@ void setupHTTPRoutes() {
   String saveDeviceSetupPath = String("/save-device-setup/") + String(deviceUUID);
   String otaUpdatePath = String("/ota-update/") + String(deviceUUID);
   String restartDevicePath = String("/restart-device/") + String(deviceUUID);
+  String testRegisterPath = String("/test-register-device/") + String(deviceUUID);
 
   httpServer.on(loginPath.c_str(), HTTP_GET, []() {
     if (serial) Serial.println("Login page requested.");
@@ -135,6 +175,12 @@ void setupHTTPRoutes() {
     httpServer.send(200, "text/plain", "Restarting Parking Slot Sensor...");
     restartDevice();  
   });
+  httpServer.on(testRegisterPath, HTTP_GET, []() {
+    httpServer.sendHeader("Connection", "close");
+    httpServer.send(200, "text/plain", "Testing Register Device Endpoint...");
+    testRegistration();
+  });
+
   httpServer.on(resetFactorySettingsPath, HTTP_GET, []() {
     if (!httpServer.authenticate(OTA_USERNAME, OTA_PASSWORD)) {
       return httpServer.requestAuthentication();
