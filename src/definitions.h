@@ -21,7 +21,7 @@ unsigned long tkeepUS = 500, tkeepUSpub = 500, tkeepRssi = 1000;
 unsigned long tkeepConnect=0, lastReconnectAttempt=0;
 unsigned int rssiTime = 6000;
 unsigned int connectTime = 5000;
-unsigned int usTime = 5000, uspubTime = 2000;
+unsigned int usTime = 5000, uspubTime = 10000;
 
 char valueStr[100];
 char SERVER[16] = "192.168.0.111";
@@ -46,6 +46,7 @@ bool firstTime = HIGH, connection = LOW;
 //-----------------------------------------------------------------------------------------------
 bool parkSpaceOccupied = LOW;
 unsigned int parkSpaceVehicleDistance = 50; //in cm
+unsigned int minVehDistance = 20, maxVehDistance = 250; //in cm
 //-----------------------------Webupdater---------------------------------
 
 const char* loginIndex =

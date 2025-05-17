@@ -8,6 +8,8 @@ String setUpForm() {
   page += "<label>Device Name:</label><input name='deviceName' value='" + String(deviceName) + "' required>";
   page += "<label>MQTT Username:</label><input name='mqttUsername' value='" + String(mqttUsername) + "' required>";
   page += "<label>MQTT Password:</label><input name='mqttKey' value='" + String(mqttKey) + "' required>";
+  page += "<label>Vehicle Distance in cm (between 20 and 250):</label><input name='parkSpaceVehicleDistance' type='number' min='" + String(minVehDistance) + "' max='" + String(maxVehDistance) + "' value='" + String(parkSpaceVehicleDistance) + "' required>";
+  // page += "<p>Give distance between 20 and 250</p>";
   page += "<input type='submit' value='Save'>";
   page += "</form></body></html>";
   return page;
@@ -29,6 +31,9 @@ void handleSaveDeviceSetup() {
   if (httpServer.hasArg("mqttKey")) {
     strncpy(mqttKey, httpServer.arg("mqttKey").c_str(), MQTT_KEY_SIZE);
     mqttKey[MQTT_KEY_SIZE - 1] = '\0';
+  }
+  if (httpServer.hasArg("parkSpaceVehicleDistance")) {
+    parkSpaceVehicleDistance = httpServer.arg("parkSpaceVehicleDistance").toInt();
   }
 
   saveConfig(); // Save to EEPROM

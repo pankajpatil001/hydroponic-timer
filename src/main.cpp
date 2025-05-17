@@ -23,6 +23,8 @@ void setup() {
   client.setCallback(callback);
 
   loadConfig(); // Load saved config at boot
+  if (serial) Serial.print("Vehicle distance from config: ");
+  if (serial) Serial.println(parkSpaceVehicleDistance);
 
   Serial.println("Loaded Configuration:");
   Serial.print("RPI IP Address: "); Serial.println(rpiServer);
@@ -31,6 +33,7 @@ void setup() {
   Serial.print("MQTT Key: "); Serial.println(mqttKey);
   // getDistance();
   if (!isDeviceRegistered()) registerDevice();
+  // else updateDeviceRegistry();
   String str = getDeviceUUID();
   str.toCharArray(deviceUUID, UUID_LENGTH+1); // Store UUID in global variable
   if (serial) Serial.print("Device UUID: ");
@@ -50,6 +53,8 @@ void setup() {
 
   setupHTTPRoutes();
   startHTTPServer(); // Start the HTTP server after WiFi connection
+
+  initiateUltrasonicSensor(); // Initialize ultrasonic sensor
 }
 
 //

@@ -71,6 +71,19 @@ uint16_t filteredAvgDist(uint16_t dly, uint8_t sample, uint8_t tolerance = 5, ui
   }
 }
 
+void setParkSlotAvailable() {
+  parkSpaceOccupied = LOW;
+  digitalWrite(parkFree, HIGH);
+  digitalWrite(parkOcc, LOW);
+  digitalWrite(relayPin, HIGH);
+}
+
+void setParkSlotOccupied() {
+  parkSpaceOccupied = HIGH;
+  digitalWrite(parkFree, LOW);
+  digitalWrite(parkOcc, HIGH);
+  digitalWrite(relayPin, LOW);
+}
 
 void getDistance() {
   if(millis() - tkeepUS > usTime) {
@@ -80,9 +93,7 @@ void getDistance() {
     if(serial) Serial.println(distance);
     if(serial) Serial.println("\n");
     if(parkSpaceOccupied && distance > parkSpaceVehicleDistance) {
-      parkSpaceOccupied = LOW;
-      digitalWrite(parkFree, HIGH);
-      digitalWrite(parkOcc, LOW);
+      setParkSlotAvailable();
       if (client.connected()) {
         char topic[256];
         snprintf(topic, sizeof(topic), "%s%s%s", PREAMBLE, PARKSLOTSTATUS, deviceUUID);
@@ -96,9 +107,7 @@ void getDistance() {
       }
      }
     else if (!parkSpaceOccupied && distance < parkSpaceVehicleDistance) {
-      parkSpaceOccupied = HIGH;
-      digitalWrite(parkFree, LOW);
-      digitalWrite(parkOcc, HIGH);
+      setParkSlotOccupied();
       if (client.connected()) {
         char topic[256];
         snprintf(topic, sizeof(topic), "%s%s%s", PREAMBLE, PARKSLOTSTATUS, deviceUUID);
@@ -113,4 +122,15 @@ void getDistance() {
      }
     tkeepUS = millis();
   }
+}
+
+void initiateUltrasonicSensor() {
+  if(serial) Serial.println("Initiating Ultrasonic Sensor...!!!");
+  
+  uint16_t iniDist = filteredAvgDist(50, 10, 5, 3); // Initial distance measurement
+  if(serial) Serial.print("Initial Distance = ");        //Output distance on arduino serial monitor
+  if(serial) Serial.println(iniDist);
+  if(iniDist > parkSpaceVehicleDistance) setParkSlotAvailable();
+  else setParkSlotOccupied();
+  if(serial) Serial.println("Ultrasonic Sensor Initiated...!!!");
 }

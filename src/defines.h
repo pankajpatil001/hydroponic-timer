@@ -38,6 +38,8 @@
 #define REGISTRATION_FLAG_SIZE 1 //Size of registration flag in bytes
 #define UUID_START_ADDR   131 //Starting address for UUID of size 36 bytes
 #define UUID_LENGTH       36 //Size of UUID in bytes
+#define VEH_DIST_ADDR     167 //Starting address for vehicle distance of size 4 bytes
+#define VEH_DIST_SIZE     4 //Size of vehicle distance in bytes
 
 #define PREAMBLE          "parksense/"
 #define MESSAGES          "feeds/messages/" //for specific messages related to batches
@@ -56,3 +58,5 @@
 #define echoP        4
 #define parkFree     12
 #define parkOcc      13
+#define relayPin     14
+#define errorLED     15 // need to test thoroughly

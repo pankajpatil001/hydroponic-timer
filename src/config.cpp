@@ -30,6 +30,8 @@ void readFromEEPROM(int startAddr, char* dest, int size) {
     readFromEEPROM(DEVICE_NAME_ADDR, deviceName, DEVICE_NAME_SIZE);
     readFromEEPROM(MQTT_USERNAME_ADDR, mqttUsername, MQTT_USERNAME_SIZE);
     readFromEEPROM(MQTT_KEY_ADDR, mqttKey, MQTT_KEY_SIZE);
+    readFromEEPROM(VEH_DIST_ADDR, (char*)&parkSpaceVehicleDistance, VEH_DIST_SIZE); // Read vehicle distance from EEPROM
+    parkSpaceVehicleDistance = (parkSpaceVehicleDistance < minVehDistance || parkSpaceVehicleDistance > maxVehDistance) ? 50 : parkSpaceVehicleDistance; // Default to 50 if not set
   }
   
   // Save config values to EEPROM
@@ -38,6 +40,7 @@ void readFromEEPROM(int startAddr, char* dest, int size) {
     writeToEEPROM(DEVICE_NAME_ADDR, deviceName, DEVICE_NAME_SIZE);
     writeToEEPROM(MQTT_USERNAME_ADDR, mqttUsername, MQTT_USERNAME_SIZE);
     writeToEEPROM(MQTT_KEY_ADDR, mqttKey, MQTT_KEY_SIZE);
+    writeToEEPROM(VEH_DIST_ADDR, (char*)&parkSpaceVehicleDistance, VEH_DIST_SIZE); // Save vehicle distance to EEPROM
   
     EEPROM.commit();
   }

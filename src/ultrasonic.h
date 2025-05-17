@@ -14,5 +14,6 @@ extern unsigned int usTime, parkSpaceVehicleDistance;
 extern PubSubClient client;
 extern char valueStr[100], deviceUUID[36]; // UUID for the device
 void getDistance();
+void initiateUltrasonicSensor();
 
 #endif

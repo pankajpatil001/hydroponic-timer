@@ -39,6 +39,7 @@ extern char deviceName[DEVICE_NAME_SIZE];
 extern char mqttUsername[MQTT_USERNAME_SIZE];
 extern char mqttKey[MQTT_KEY_SIZE];
 extern char deviceUUID[36]; // UUID for the device
+extern unsigned int parkSpaceVehicleDistance, minVehDistance, maxVehDistance; //in cm
 
 void performOTAUpdate();
 void WiFi_httpStuff();
