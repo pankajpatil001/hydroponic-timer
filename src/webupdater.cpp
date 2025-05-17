@@ -97,8 +97,8 @@ void startHTTPServer() {
 void testRegistration() {
   if (serial) Serial.println("Testing registration...");
   if (serial) Serial.println("Connecting to server: " + String(rpiServer) + ":" + String(RPI_HTTP_PORT));
-  HTTPClient http;
-  WiFiClient client;
+  // HTTPClient http;
+  // WiFiClient client;
 
   String payload = "{\"park_slot_name\":\"TestDevice\",\"ps_mac_address\":\"" + WiFi.macAddress() +
                    "\",\"firmware_version\":\"1.0.0\",\"ps_device_ip\":\"" + WiFi.localIP().toString() + "\"}";
@@ -107,16 +107,16 @@ void testRegistration() {
   Serial.println("Posting to: " + url);
   Serial.println("Payload: " + payload);
 
-  http.begin(client, url);
-  http.addHeader("Content-Type", "application/json");
+  rpihttp.begin(wificlient, url);
+  rpihttp.addHeader("Content-Type", "application/json");
 
-  int httpCode = http.POST(payload);
-  String response = http.getString();
+  int httpCode = rpihttp.POST(payload);
+  String response = rpihttp.getString();
 
   Serial.println("HTTP code: " + String(httpCode));
   Serial.println("Response: " + response);
 
-  http.end();
+  rpihttp.end();
 
   if (httpCode == HTTP_CODE_OK) {
     StaticJsonDocument<128> doc;

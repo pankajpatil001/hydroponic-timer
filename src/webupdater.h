@@ -17,7 +17,8 @@
 
 extern WiFiClientSecure wificlientsecure;
 // create MQTT object
-// extern WiFiClient wificlient; //This is the client used for MQTT connection
+extern WiFiClient wificlient; //This is the client used for MQTT connection
+extern HTTPClient rpihttp; //HTTP client for RPI server
 extern PubSubClient client;
 // extern const char* host;
 extern bool serial, wifiConnected;

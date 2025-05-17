@@ -138,6 +138,7 @@ WiFiClientSecure wificlientsecure;
 // create MQTT object
 PubSubClient client(wificlient);
 // const char* host = "esp8266-webupdate";
+HTTPClient rpihttp; //HTTP client for RPI server
 bool serial = HIGH;
 
 // ESP8266WiFiMulti wifiMulti;

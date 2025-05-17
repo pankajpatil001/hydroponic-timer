@@ -4,11 +4,12 @@
 
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
+#include <ESP8266HTTPClient.h>
 #include <EEPROM.h>
 #include <ArduinoJson.h>
 #include "defines.h"
 
-
+extern HTTPClient rpihttp;
 extern WiFiClient wificlient; //This is the client used for WiFi / HTTP connection
 extern bool serial;
 extern char SERVER[16];
