@@ -19,7 +19,7 @@ extern char deviceUUID[36]; // UUID for the device
 extern String defaultUUID; // Default UUID for the device
 bool registerDevice();
 bool isDeviceRegistered();
-bool updateDeviceRegistry();
+bool updateDeviceIP();
 String getDeviceUUID();
 
 #endif

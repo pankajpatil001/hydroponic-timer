@@ -1,6 +1,7 @@
 #include "registerDevice.h"
 
 const char* registrationPath = "/api/register-park-slot-device";
+const char* updateIPPath = "/api/update-park-slot-ip";
 
 bool isDeviceRegistered() {
     uint8_t flag = EEPROM.read(REGISTRATION_FLAG_ADDR);
@@ -43,13 +44,8 @@ String getDeviceUUID() {
     return uuid;
 }
 
-bool updateDeviceRegistry() {
-    if (serial) Serial.println("Updating Device Registry...");
-
-    if (!wificlient.connect(rpiServer, RPI_HTTP_PORT)) {
-        if (serial) Serial.println("Failed to connect to server for registration.");
-        return false;
-    }
+bool updateDeviceIP() {
+    if (serial) Serial.println("Updating Device IP...");
 
     if (deviceName[0] == '\0') {
         if (serial) Serial.println("Device name is empty. Cannot register.");
@@ -64,62 +60,45 @@ bool updateDeviceRegistry() {
     }
 
     String mac = WiFi.macAddress();
-    String payload = "{\"park_slot_name\":\"" + String(deviceName) + 
-                     "\",\"ps_mac_address\":\"" + mac +  
+    String payload = "{\"ps_mac_address\":\"" + mac +  
                      "\",\"firmware_version\":\"" + String(firmwareVersion) + 
                      "\",\"ps_device_ip\":\"" + WiFi.localIP().toString() + "\"}";
-
-    String request = "POST " + String(registrationPath) + " HTTP/1.1\r\n" +
-                     "Host: " + String(rpiServer) + ":" + String(RPI_HTTP_PORT) + "\r\n" +
-                    //  "Host: " + "100.110.196.11" + ":" + String(RPI_HTTP_PORT) + "\r\n" + // this won't work as vpn network cannot be accessed from outside (esp)
-                     "Content-Type: application/json\r\n" +
-                     "Content-Length: " + String(payload.length()) + "\r\n" +
-                     "Connection: close\r\n\r\n" +
-                     payload;
-
-    if (serial) Serial.println("Sending registration request:");
-    if (serial) Serial.println(request); // Print request for debugging
-    wificlient.print(request);
-    wificlient.flush(); 
-    delay(100);
-
-    if (serial) Serial.println("-----------------"); // Print separator
+                     
+    if (serial) Serial.println("Sending update IP request:");
+    String url = "http://" + String(rpiServer) + ":5000" + String(updateIPPath);
+    if (serial) Serial.println("Posting to: " + url);
+    if (serial) Serial.println("Payload: " + payload);
     
-    while (wificlient.connected()) {
-        String line = wificlient.readStringUntil('\n');
-        if (line == "\r" || line.length() == 0) break;
-        if (serial) Serial.println(line);
-    }
-    if (serial) Serial.println("-----------------"); // Print separator
+    rpihttp.begin(wificlient, url);
+    rpihttp.addHeader("Content-Type", "application/json");
 
-    Serial.println("Waiting for server response...");
-    String response = wificlient.readString();
-    Serial.println("Server response: ");
-    Serial.println(response); // Print server response
+    int httpCode = rpihttp.POST(payload);
+    String response = rpihttp.getString();
 
-    StaticJsonDocument<256> doc;
-    DeserializationError error = deserializeJson(doc, response);
+    if (serial) Serial.println("HTTP code: " + String(httpCode));
+    if (serial) Serial.println("Response: " + response);
 
-    if (error) {
-        if (serial) Serial.print("❌ JSON parse error: ");
-        if (serial) Serial.println(error.c_str());
+    rpihttp.end();
+
+    if (httpCode == HTTP_CODE_OK) {
+        StaticJsonDocument<128> doc;
+        DeserializationError error = deserializeJson(doc, response);
+        if (serial) Serial.println("Parsed JSON document:");
+        serializeJsonPretty(doc, Serial);
+        if (serial) Serial.println();  // Just for clarity in serial output
+
+        if (!error && doc.containsKey("status")) {
+            String updateIPStatus = doc["status"];
+            if (serial) Serial.println("✅ Update Status: " + updateIPStatus);
+            return true;
+        } else {
+            if (serial) Serial.println("❌ Failed to parse update status from response.");
+            return false;
+        }
+    } else {
+        if (serial) Serial.println("❌ HTTP request failed.");
         return false;
     }
-
-    Serial.println("Parsed JSON document:");
-    serializeJsonPretty(doc, Serial);
-    Serial.println();  // Just for clarity in serial output
-
-    if (doc.containsKey("device_uuid")) {
-        String device_uuid = doc["device_uuid"];
-        saveRegistrationStatus(device_uuid);
-        if (serial) Serial.println("✅ Registered with device_uuid: " + device_uuid);
-        return true;
-    }
-
-    if (serial) Serial.println("❌ UUID not found in response");
-
-    return false;
 }
 
 bool registerDevice() {
@@ -155,14 +134,6 @@ bool registerDevice() {
                      "\",\"ps_mac_address\":\"" + mac +  
                      "\",\"firmware_version\":\"" + String(firmwareVersion) + 
                      "\",\"ps_device_ip\":\"" + WiFi.localIP().toString() + "\"}";
-
-    // String request = "POST " + String(registrationPath) + " HTTP/1.1\r\n" +
-    //                  "Host: " + String(rpiServer) + ":" + String(RPI_HTTP_PORT) + "\r\n" +
-    //                 //  "Host: " + "100.110.196.11" + ":" + String(RPI_HTTP_PORT) + "\r\n" + // this won't work as vpn network cannot be accessed from outside (esp)
-    //                  "Content-Type: application/json\r\n" +
-    //                  "Content-Length: " + String(payload.length()) + "\r\n" +
-    //                  "Connection: close\r\n\r\n" +
-    //                  payload;
 
     if (serial) Serial.println("Sending registration request:");
     String url = "http://" + String(rpiServer) + ":5000" + String(registrationPath);

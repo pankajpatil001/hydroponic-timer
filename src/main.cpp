@@ -34,7 +34,7 @@ void setup() {
   Serial.print("MQTT Key: "); Serial.println(mqttKey);
   // getDistance();
   if (!isDeviceRegistered()) registerDevice();
-  // else updateDeviceRegistry();
+  else updateDeviceIP();
   String str = getDeviceUUID();
   str.toCharArray(deviceUUID, UUID_LENGTH+1); // Store UUID in global variable
   if (serial) Serial.print("Device UUID: ");
