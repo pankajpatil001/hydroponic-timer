@@ -144,7 +144,7 @@ void setupHTTPRoutes() {
   String saveDeviceSetupPath = String("/save-device-setup/") + String(deviceUUID);
   String otaUpdatePath = String("/ota-update/") + String(deviceUUID);
   String restartDevicePath = String("/restart-device/") + String(deviceUUID);
-  String testRegisterPath = String("/test-register-device/") + String(deviceUUID);
+  // String testRegisterPath = String("/test-register-device/") + String(deviceUUID);
 
   httpServer.on(loginPath.c_str(), HTTP_GET, []() {
     if (serial) Serial.println("Login page requested.");
@@ -175,11 +175,11 @@ void setupHTTPRoutes() {
     httpServer.send(200, "text/plain", "Restarting Parking Slot Sensor...");
     restartDevice();  
   });
-  httpServer.on(testRegisterPath, HTTP_GET, []() {
-    httpServer.sendHeader("Connection", "close");
-    httpServer.send(200, "text/plain", "Testing Register Device Endpoint...");
-    testRegistration();
-  });
+  // httpServer.on(testRegisterPath, HTTP_GET, []() {
+  //   httpServer.sendHeader("Connection", "close");
+  //   httpServer.send(200, "text/plain", "Testing Register Device Endpoint...");
+  //   testRegistration();
+  // });
 
   httpServer.on(resetFactorySettingsPath, HTTP_GET, []() {
     if (!httpServer.authenticate(OTA_USERNAME, OTA_PASSWORD)) {
@@ -229,6 +229,9 @@ void WiFi_httpStuff(){
   // Add a custom parameter
   WiFiManagerParameter custom_mqtt_server("server", "MQTT Server IP", rpiServer, 40);
   wifiManager.addParameter(&custom_mqtt_server);
+
+  // Set timeout to auto-exit portal if user doesn't connect
+  wifiManager.setConfigPortalTimeout(150); // 3 minutes
 
   // Blocks until connected or credentials provided via captive portal
   if (!wifiManager.autoConnect(ACCESS_POINT_NAME, ACCESS_POINT_PWD)) {
