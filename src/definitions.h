@@ -5,7 +5,7 @@
 #include "webupdater.h" //Add Web Update feature instead of OTA
 #include "callback.h"
 #include "connectSubscribe.h"
-#include "ultrasonic.h"
+#include "timer.h"
 #include "defines.h"
 #include "publish.h"
 #include "registerDevice.h"
@@ -24,18 +24,19 @@ unsigned int connectTime = 5000;
 unsigned int usTime = 5000, uspubTime = 10000;
 
 char valueStr[100];
-char SERVER[16] = "192.168.0.111";
+// char SERVER[16] = "192.168.0.111";
+char SERVER[16] = "io.adafruit.com";
 String incoming[100];
 uint8_t wifiReconnectAttemptCount=0;
 
 // Parameters from intial setup
 char rpiServer[RPI_IP_SIZE];
-char deviceName[DEVICE_NAME_SIZE] = "Test Device"; //Specify the name to be seen on network
+char deviceName[DEVICE_NAME_SIZE] = "Hydroponic Timer"; //Specify the name to be seen on network
 bool configFreshlySaved = LOW;
-char mqttUsername[MQTT_USERNAME_SIZE] = "test_mqtt";
-char mqttKey[MQTT_KEY_SIZE] = "test_pass";
+char mqttUsername[MQTT_USERNAME_SIZE] = "patilect";
+char mqttKey[MQTT_KEY_SIZE] = "d288fe61159d4fb084882b7de8a13ca6";
 
-const char* firmwareURL = "https://raw.githubusercontent.com/pankajpatil001/parking-indicator/master/firmwares/nodemcuv2.bin";
+const char* firmwareURL = "https://raw.githubusercontent.com/pankajpatil001/hydroponic-timer/master/firmwares/nodemcuv2.bin";
 
 bool wifiConnected = LOW;
 bool mqttConnected = LOW;
@@ -44,9 +45,15 @@ String defaultUUID = "parksense-default-iot-uuid"; // Default UUID for the devic
 //--------------------------------------------------------------------------------
 bool firstTime = HIGH, connection = LOW;
 //-----------------------------------------------------------------------------------------------
-bool parkSpaceOccupied = LOW;
-unsigned int parkSpaceVehicleDistance = 50; //in cm
-unsigned int minVehDistance = 20, maxVehDistance = 250; //in cm
+
+bool waterPumpOn = false;
+unsigned int onTime = 60, offTime = 600, testTime = 10; //seconds
+unsigned int timerTime = 990; //ms
+unsigned long tkeepTimer = 3000, timer = 0; // start after 3 secs
+
+// bool parkSpaceOccupied = LOW;
+// unsigned int parkSpaceVehicleDistance = 50; //in cm
+// unsigned int minVehDistance = 20, maxVehDistance = 250; //in cm
 //-----------------------------Webupdater---------------------------------
 
 const char* loginIndex =
@@ -55,7 +62,7 @@ const char* loginIndex =
         "<tr>"
             "<td colspan=2>"
                 "<center><font size=4><b>Patilect Smart Solutions</b></font></center>"
-                "<center><font size=3><b>Test Device</b></font></center>"
+                "<center><font size=3><b>Hydroponic Timer</b></font></center>"
                 "<br>"
             "</td>"
             "<br>"

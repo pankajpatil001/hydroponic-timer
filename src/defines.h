@@ -1,19 +1,3 @@
-// /*-------- WiFi Connection Settings -------------*/
-// #define ssid1   "ModiInfonet_PKD"
-// #define pwd1    "@##pankaj##@"
-
-// #define ssid2    "Bajrangbali2"
-// #define pwd2    "11JaiShreeRam11"
-
-// #define ssid3   "Pankaj's iPhone"
-// #define pwd3    "iPhone91"
-
-// #define ssid5    "Bajrangbali5"
-// #define pwd5    "11JaiShreeRam11"
-
-// #define ssid7   "Redmi Note 4"
-// #define pwd7    "ILPatil64"
-
 
 /*-------- Important IOT Device Settings ---------*/
 // #define deviceName        "Test Device" //Specify the name to be seen on network
@@ -23,6 +7,9 @@
 // #define SERVER         "192.168.0.111" //"192.168.1.105"
 #define SERVERPORT        1883
 #define RPI_HTTP_PORT     5000 //Port for RPI HTTP server
+#define ADA_SERVER       "io.adafruit.com"
+#define ADA_USER_NAME    "patilect"
+#define ADA_ACC_KEY      "d288fe61159d4fb084882b7de8a13ca6"
 
 // EEPROM Layout
 #define EEPROM_SIZE       512 //Size of EEPROM in bytes
@@ -38,14 +25,20 @@
 #define REGISTRATION_FLAG_SIZE 1 //Size of registration flag in bytes
 #define UUID_START_ADDR   131 //Starting address for UUID of size 36 bytes
 #define UUID_LENGTH       36 //Size of UUID in bytes
-#define VEH_DIST_ADDR     167 //Starting address for vehicle distance of size 4 bytes
-#define VEH_DIST_SIZE     4 //Size of vehicle distance in bytes
+#define ONN_TIME_ADDR     167 //Starting address for vehicle distance of size 5 bytes
+#define OFF_TIME_ADDR     172 //Starting address for vehicle distance of size 5 bytes
+#define ON_TIME_ADDR      177 //Starting address for vehicle distance of size 5 bytes
+#define TEST_TIME_ADDR    182 //Starting address for vehicle distance of size 5 bytes
+#define TIME_SIZE         5 //Size of time in bytes
 
-#define PREAMBLE          "parksense/"
-#define MESSAGES          "feeds/messages/" //for specific messages related to batches
+#define PREAMBLE          "patilect/"
+#define MESSAGES          "patilect/feeds/messages" //for specific messages related to batches
 // #define PARKINDCTR        "sensor/parkindicator"
-#define DISTANCE          "sensor/distance/"
-#define PARKSLOTSTATUS    "sensor/parkslotstatus/"
+// #define DISTANCE          "sensor/distance/"
+// #define PARKSLOTSTATUS    "sensor/parkslotstatus/"
+
+#define ON_TIME           "patilect/feeds/ontime"
+#define OFF_TIME          "patilect/feeds/offtime"
 
 #define ACCESS_POINT_NAME "ParkSense-ESP-AP"
 #define ACCESS_POINT_PWD  "ParkSensePass" //Password for access point
@@ -58,5 +51,5 @@
 #define echoP        4
 #define parkFree     12
 #define parkOcc      13
-#define relayPin     14
+#define waterPumpPin 14
 #define errorLED     15 // need to test thoroughly

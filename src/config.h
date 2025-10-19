@@ -14,7 +14,8 @@ extern char rpiServer[RPI_IP_SIZE];
 extern char deviceName[DEVICE_NAME_SIZE];
 extern char mqttUsername[MQTT_USERNAME_SIZE];
 extern char mqttKey[MQTT_KEY_SIZE];
-extern unsigned int parkSpaceVehicleDistance, minVehDistance, maxVehDistance; //in cm
+// extern unsigned int parkSpaceVehicleDistance, minVehDistance, maxVehDistance; //in cm
+extern unsigned int onTime, offTime, testTime; //in seconds
 
 // EEPROM helper functions
 void readFromEEPROM(int startAddr, char* dest, int size);

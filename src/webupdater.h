@@ -40,8 +40,11 @@ extern char rpiServer[RPI_IP_SIZE];
 extern char deviceName[DEVICE_NAME_SIZE];
 extern char mqttUsername[MQTT_USERNAME_SIZE];
 extern char mqttKey[MQTT_KEY_SIZE];
+extern unsigned int onTime;
+extern unsigned int offTime;
+extern unsigned int testTime;
 extern char deviceUUID[36]; // UUID for the device
-extern unsigned int parkSpaceVehicleDistance, minVehDistance, maxVehDistance; //in cm
+// extern unsigned int parkSpaceVehicleDistance, minVehDistance, maxVehDistance; //in cm
 
 void performOTAUpdate();
 void WiFi_httpStuff();

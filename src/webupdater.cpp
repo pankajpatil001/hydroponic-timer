@@ -1,14 +1,18 @@
 #include "webupdater.h"
 
 String setUpForm() {
-  String page = "<!DOCTYPE html><html><head><title>Device Config</title>";
+  String page = "<!DOCTYPE html><html><head><title>Patilect Water Pump Config</title>";
   page += "<style>body{font-family:sans-serif;max-width:400px;margin:auto;padding:1em;}input{width:100%;margin-bottom:1em;padding:0.5em;}</style>";
-  page += "</head><body><h2>Configure Device</h2><form method='POST' action='/save-device-setup/" + String(deviceUUID) + "'>";
-  page += "<label>RPI IP Address:</label><input name='rpiServer' value='" + String(rpiServer) + "' required>";
-  page += "<label>Device Name:</label><input name='deviceName' value='" + String(deviceName) + "' required>";
-  page += "<label>MQTT Username:</label><input name='mqttUsername' value='" + String(mqttUsername) + "' required>";
-  page += "<label>MQTT Password:</label><input name='mqttKey' value='" + String(mqttKey) + "' required>";
-  page += "<label>Vehicle Distance in cm (between 20 and 250):</label><input name='parkSpaceVehicleDistance' type='number' min='" + String(minVehDistance) + "' max='" + String(maxVehDistance) + "' value='" + String(parkSpaceVehicleDistance) + "' required>";
+  page += "<div style='text-align: center;'><h1>Welcome to Patilect's</h1><br/><h2>Water Pump Config Page</h2></div>";
+  page += "</head><body><h2>Configure Device</h2><form method='POST' action='/save-device-setup/'>"; // + String(deviceUUID) + "'>";
+  page += "<label>MQTT Host / IP:</label><input name='rpiServer' value='" + String(rpiServer) + "'>"; // "' required>";
+  page += "<label>Device Name:</label><input name='deviceName' value='" + String(deviceName) + "'>"; // "' required>";
+  page += "<label>MQTT Username:</label><input name='mqttUsername' value='" + String(mqttUsername) + "'>"; // "' required>";
+  page += "<label>MQTT Password:</label><input name='mqttKey' value='" + String(mqttKey) + "'>"; // "' required>";
+  page += "<label>Timer ON time:</label><input name='onTime' type='number' value='" + String(onTime) + "'>"; // "' required>";
+  page += "<label>Timer OFF time:</label><input name='offTime' type='number' value='" + String(offTime) + "'>"; // "' required>";
+  page += "<label>Timer TEST time:</label><input name='testTime' type='number' value='" + String(testTime) + "'>"; // "' required>";
+  // page += "<label>Vehicle Distance in cm (between 20 and 250):</label><input name='parkSpaceVehicleDistance' type='number' min='" + String(minVehDistance) + "' max='" + String(maxVehDistance) + "' value='" + String(parkSpaceVehicleDistance) + "' required>";
   // page += "<p>Give distance between 20 and 250</p>";
   page += "<input type='submit' value='Save'>";
   page += "</form></body></html>";
@@ -32,8 +36,17 @@ void handleSaveDeviceSetup() {
     strncpy(mqttKey, httpServer.arg("mqttKey").c_str(), MQTT_KEY_SIZE);
     mqttKey[MQTT_KEY_SIZE - 1] = '\0';
   }
-  if (httpServer.hasArg("parkSpaceVehicleDistance")) {
-    parkSpaceVehicleDistance = httpServer.arg("parkSpaceVehicleDistance").toInt();
+  if (httpServer.hasArg("onTime")) {
+    Serial.println(httpServer.arg("onTime"));
+    onTime = httpServer.arg("onTime").toInt();
+  }
+  if (httpServer.hasArg("offTime")) {
+    Serial.println(httpServer.arg("offTime"));
+    offTime = httpServer.arg("offTime").toInt();
+  }
+  if (httpServer.hasArg("testTime")) {
+    Serial.println(httpServer.arg("testTime"));
+    testTime = httpServer.arg("testTime").toInt();
   }
 
   saveConfig(); // Save to EEPROM
@@ -136,14 +149,14 @@ void testRegistration() {
 void setupHTTPRoutes() {
   if (serial) Serial.println("Setting up HTTP routes...");
   
-  String loginPath = String("/login/") + String(deviceUUID);
-  String triggerUpdatePath = String("/trigger-update/") + String(deviceUUID);
-  String registerPath = String("/register/") + String(deviceUUID);
-  String resetFactorySettingsPath = String("/reset-to-factory-settings/") + String(deviceUUID);
-  String deviceSetupPath = String("/devicesetup/") + String(deviceUUID);
-  String saveDeviceSetupPath = String("/save-device-setup/") + String(deviceUUID);
-  String otaUpdatePath = String("/ota-update/") + String(deviceUUID);
-  String restartDevicePath = String("/restart-device/") + String(deviceUUID);
+  String loginPath = String("/login/"); // + String(deviceUUID);
+  String triggerUpdatePath = String("/trigger-update/"); // + String(deviceUUID);
+  String registerPath = String("/register/"); // + String(deviceUUID);
+  String resetFactorySettingsPath = String("/reset-to-factory-settings/"); // + String(deviceUUID);
+  String deviceSetupPath = String("/device-setup/"); // + String(deviceUUID);
+  String saveDeviceSetupPath = String("/save-device-setup/"); // + String(deviceUUID);
+  String otaUpdatePath = String("/ota-update/"); // + String(deviceUUID);
+  String restartDevicePath = String("/restart-device/"); // + String(deviceUUID);
   // String testRegisterPath = String("/test-register-device/") + String(deviceUUID);
 
   httpServer.on(loginPath.c_str(), HTTP_GET, []() {

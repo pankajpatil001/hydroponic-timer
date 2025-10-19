@@ -37,9 +37,15 @@ void connectSubscribe(){
         Serial.println(mqttKey);
       }
       // Attempt to connect
+      // if (client.connect("", ADA_USER_NAME, ADA_ACC_KEY)) {
       if (client.connect("", mqttUsername, mqttKey)) {
         if(serial) Serial.println("connected");
         // ... and resubscribe
+        Serial.println(ON_TIME);
+        Serial.println(OFF_TIME);
+        client.subscribe("patilect/feeds/ontime", 1);
+        client.subscribe("patilect/feeds/offtime", 1);
+        // client.subscribe("patilect/feeds/+", 1);
   
         delay(1);
         connection = HIGH;
