@@ -32,13 +32,13 @@
 #define TIME_SIZE         5 //Size of time in bytes
 
 #define PREAMBLE          "patilect/"
-#define MESSAGES          "patilect/feeds/messages" //for specific messages related to batches
+#define MESSAGES          "Umeshp99/feeds/messages" //for specific messages related to batches
 // #define PARKINDCTR        "sensor/parkindicator"
 // #define DISTANCE          "sensor/distance/"
 // #define PARKSLOTSTATUS    "sensor/parkslotstatus/"
 
-#define ON_TIME           "patilect/feeds/ontime"
-#define OFF_TIME          "patilect/feeds/offtime"
+#define ON_TIME           "Umeshp99/feeds/on-time"
+#define OFF_TIME          "Umeshp99/feeds/off-time"
 
 #define ACCESS_POINT_NAME "Patilect-ESP-AP"
 #define ACCESS_POINT_PWD  "PatilectPass" //Password for access point
