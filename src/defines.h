@@ -40,8 +40,8 @@
 #define ON_TIME           "patilect/feeds/ontime"
 #define OFF_TIME          "patilect/feeds/offtime"
 
-#define ACCESS_POINT_NAME "ParkSense-ESP-AP"
-#define ACCESS_POINT_PWD  "ParkSensePass" //Password for access point
+#define ACCESS_POINT_NAME "Patilect-ESP-AP"
+#define ACCESS_POINT_PWD  "PatilectPass" //Password for access point
 
 #define OTA_USERNAME     "ps_admin" //OTA username
 #define OTA_PASSWORD     "ps_ota_pass" //OTA password
