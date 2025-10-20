@@ -43,8 +43,8 @@ void connectSubscribe(){
         // ... and resubscribe
         Serial.println(ON_TIME);
         Serial.println(OFF_TIME);
-        client.subscribe("patilect/feeds/ontime", 1);
-        client.subscribe("patilect/feeds/offtime", 1);
+        client.subscribe("Umeshp99/feeds/on-time", 1);
+        client.subscribe("Umeshp99/feeds/off-time", 1);
         // client.subscribe("patilect/feeds/+", 1);
   
         delay(1);
