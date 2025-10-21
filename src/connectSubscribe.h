@@ -17,6 +17,8 @@ extern bool serial, connection;
 extern unsigned long tkeepConnect, lastReconnectAttempt;
 extern unsigned int connectTime;
 extern char rpiServer[RPI_IP_SIZE], mqttUsername[MQTT_USERNAME_SIZE], mqttKey[MQTT_KEY_SIZE]; // MQTT username and password
+extern char onTimeFeed[FEED_SIZE], offTimeFeed[FEED_SIZE];
+
 // extern ESP8266WiFiMulti wifiMulti;
 void connectSubscribe();
 // void getFeedLatest();

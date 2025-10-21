@@ -33,7 +33,10 @@ void setup() {
   Serial.print("MQTT Username: "); Serial.println(mqttUsername);
   Serial.print("On Time: "); Serial.println(onTime);
   Serial.print("Off Time: "); Serial.println(offTime);
-  Serial.print("Test Time: "); Serial.println(testTime);
+  Serial.print("On Time Feed: "); Serial.println(onTimeFeed);
+  Serial.print("Off Time Feed: "); Serial.println(offTimeFeed);
+  Serial.print("Messages Feed: "); Serial.println(msgsFeed);
+
   // getDistance();
   // if (!isDeviceRegistered()) registerDevice();
   // else updateDeviceIP();

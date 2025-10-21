@@ -12,8 +12,15 @@ void publishFeeds(){
     str+= " dBm";
     str.toCharArray(valueStr, 70);
     Serial.println(str);
-    Serial.println(MESSAGES);
-    if (client.publish(MESSAGES, valueStr)) Serial.println("Successfully published.");
+    
+    char msgsTopic[MQTT_USERNAME_SIZE + FEED_SIZE + 2]; // +2 FOR / AND \0
+    strcpy(msgsTopic, mqttUsername);
+    strcat(msgsTopic, "/");
+    strcat(msgsTopic, msgsFeed);
+    Serial.print("Topic name: ");
+    Serial.println(msgsTopic);
+    // Serial.println(MESSAGES);
+    if (client.publish(msgsTopic, valueStr)) Serial.println("Successfully published.");
     // client.publish("patilect/feeds/messages", "test_publish");
     tkeepRssi = millis();
   }

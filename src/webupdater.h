@@ -40,6 +40,7 @@ extern char rpiServer[RPI_IP_SIZE];
 extern char deviceName[DEVICE_NAME_SIZE];
 extern char mqttUsername[MQTT_USERNAME_SIZE];
 extern char mqttKey[MQTT_KEY_SIZE];
+extern char onTimeFeed[FEED_SIZE], offTimeFeed[FEED_SIZE], msgsFeed[FEED_SIZE];
 extern unsigned int onTime;
 extern unsigned int offTime;
 extern unsigned int testTime;

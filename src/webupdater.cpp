@@ -9,6 +9,9 @@ String setUpForm() {
   page += "<label>Device Name:</label><input name='deviceName' value='" + String(deviceName) + "'>"; // "' required>";
   page += "<label>MQTT Username:</label><input name='mqttUsername' value='" + String(mqttUsername) + "'>"; // "' required>";
   page += "<label>MQTT Password:</label><input name='mqttKey' value='" + String(mqttKey) + "'>"; // "' required>";
+  page += "<label>On Time Feed:</label><input name='onTimeFeed' value='" + String(onTimeFeed) + "'>"; // "' required>";
+  page += "<label>Off Time Feed:</label><input name='offTimeFeed' value='" + String(offTimeFeed) + "'>"; // "' required>";
+  page += "<label>Messages Feed:</label><input name='msgsFeed' value='" + String(msgsFeed) + "'>"; // "' required>";
   page += "<label>Timer ON time:</label><input name='onTime' type='number' value='" + String(onTime) + "'>"; // "' required>";
   page += "<label>Timer OFF time:</label><input name='offTime' type='number' value='" + String(offTime) + "'>"; // "' required>";
   // page += "<label>Timer TEST time:</label><input name='testTime' type='number' value='" + String(testTime) + "'>"; // "' required>";
@@ -31,6 +34,18 @@ void handleSaveDeviceSetup() {
   if (httpServer.hasArg("mqttUsername")) {
     strncpy(mqttUsername, httpServer.arg("mqttUsername").c_str(), MQTT_USERNAME_SIZE);
     mqttUsername[MQTT_USERNAME_SIZE - 1] = '\0';
+  }
+  if (httpServer.hasArg("onTimeFeed")) {
+    strncpy(onTimeFeed, httpServer.arg("onTimeFeed").c_str(), FEED_SIZE);
+    onTimeFeed[FEED_SIZE - 1] = '\0';
+  }
+  if (httpServer.hasArg("offTimeFeed")) {
+    strncpy(offTimeFeed, httpServer.arg("offTimeFeed").c_str(), FEED_SIZE);
+    offTimeFeed[FEED_SIZE - 1] = '\0';
+  }
+  if (httpServer.hasArg("msgsFeed")) {
+    strncpy(msgsFeed, httpServer.arg("msgsFeed").c_str(), FEED_SIZE);
+    msgsFeed[FEED_SIZE - 1] = '\0';
   }
   if (httpServer.hasArg("mqttKey")) {
     strncpy(mqttKey, httpServer.arg("mqttKey").c_str(), MQTT_KEY_SIZE);
@@ -185,7 +200,7 @@ void setupHTTPRoutes() {
       return httpServer.requestAuthentication();
     }
     httpServer.sendHeader("Connection", "close");
-    httpServer.send(200, "text/plain", "Restarting Parking Slot Sensor...");
+    httpServer.send(200, "text/plain", "Restarting Device...");
     restartDevice();  
   });
   // httpServer.on(testRegisterPath, HTTP_GET, []() {

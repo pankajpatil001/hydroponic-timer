@@ -37,14 +37,12 @@ void readFromEEPROM(int startAddr, char* dest, int size) {
     readFromEEPROM(DEVICE_NAME_ADDR, deviceName, DEVICE_NAME_SIZE);
     readFromEEPROM(MQTT_USERNAME_ADDR, mqttUsername, MQTT_USERNAME_SIZE);
     readFromEEPROM(MQTT_KEY_ADDR, mqttKey, MQTT_KEY_SIZE);
+    readFromEEPROM(ON_FEED_ADDR, onTimeFeed, FEED_SIZE);
+    readFromEEPROM(OFF_FEED_ADDR, offTimeFeed, FEED_SIZE);
+    readFromEEPROM(MSGS_FEED_ADDR, msgsFeed, FEED_SIZE);
     EEPROM.get(ON_TIME_ADDR, onTime);
     EEPROM.get(OFF_TIME_ADDR, offTime);
     EEPROM.get(TEST_TIME_ADDR, testTime);
-    // readFromEEPROM(ON_TIME_ADDR, (char*)&onTime, TIME_SIZE);
-    // readFromEEPROM(OFF_TIME_ADDR, (char*)&offTime, TIME_SIZE);
-    // readFromEEPROM(TEST_TIME_ADDR, (char*)&testTime, TIME_SIZE);
-    // readFromEEPROM(VEH_DIST_ADDR, (char*)&parkSpaceVehicleDistance, VEH_DIST_SIZE); // Read vehicle distance from EEPROM
-    // parkSpaceVehicleDistance = (parkSpaceVehicleDistance < minVehDistance || parkSpaceVehicleDistance > maxVehDistance) ? 50 : parkSpaceVehicleDistance; // Default to 50 if not set
   }
   
   // Save config values to EEPROM
@@ -53,14 +51,13 @@ void readFromEEPROM(int startAddr, char* dest, int size) {
     writeToEEPROM(DEVICE_NAME_ADDR, deviceName, DEVICE_NAME_SIZE);
     writeToEEPROM(MQTT_USERNAME_ADDR, mqttUsername, MQTT_USERNAME_SIZE);
     writeToEEPROM(MQTT_KEY_ADDR, mqttKey, MQTT_KEY_SIZE);
+    writeToEEPROM(ON_FEED_ADDR, onTimeFeed, FEED_SIZE);
+    writeToEEPROM(OFF_FEED_ADDR, offTimeFeed, FEED_SIZE);
+    writeToEEPROM(MSGS_FEED_ADDR, msgsFeed, FEED_SIZE);
     EEPROM.put(ON_TIME_ADDR, onTime);
     EEPROM.put(OFF_TIME_ADDR, offTime);
     EEPROM.put(TEST_TIME_ADDR, testTime);
-    // writeToEEPROM(ON_TIME_ADDR, (char*)&onTime, TIME_SIZE);
-    // writeToEEPROM(OFF_TIME_ADDR, (char*)&offTime, TIME_SIZE);
-    // writeToEEPROM(TEST_TIME_ADDR, (char*)&testTime, TIME_SIZE);
-    // writeToEEPROM(VEH_DIST_ADDR, (char*)&parkSpaceVehicleDistance, VEH_DIST_SIZE); // Save vehicle distance to EEPROM
-  
+    
     EEPROM.commit();
   }
 

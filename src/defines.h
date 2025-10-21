@@ -30,6 +30,10 @@
 #define ON_TIME_ADDR      177 //Starting address for vehicle distance of size 5 bytes
 #define TEST_TIME_ADDR    182 //Starting address for vehicle distance of size 5 bytes
 #define TIME_SIZE         5 //Size of time in bytes
+#define FEED_SIZE         50
+#define ON_FEED_ADDR      187
+#define OFF_FEED_ADDR     237
+#define MSGS_FEED_ADDR    287
 
 #define PREAMBLE          "patilect/"
 #define MESSAGES          "Umeshp99/feeds/messages" //for specific messages related to batches

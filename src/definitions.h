@@ -35,6 +35,9 @@ char deviceName[DEVICE_NAME_SIZE] = "Hydroponic Timer"; //Specify the name to be
 bool configFreshlySaved = LOW;
 char mqttUsername[MQTT_USERNAME_SIZE] = "patilect";
 char mqttKey[MQTT_KEY_SIZE] = "d288fe61159d4fb084882b7de8a13ca6";
+char onTimeFeed[FEED_SIZE] = "feeds/ontime";
+char offTimeFeed[FEED_SIZE] = "feeds/offtime";
+char msgsFeed[FEED_SIZE] = "feeds/messages";
 
 const char* firmwareURL = "https://raw.githubusercontent.com/pankajpatil001/hydroponic-timer/master/firmwares/nodemcuv2.bin";
 

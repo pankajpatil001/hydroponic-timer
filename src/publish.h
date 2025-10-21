@@ -10,6 +10,7 @@ extern unsigned int rssiTime, uspubTime;
 extern bool firstTime, connection;
 extern PubSubClient client;
 extern char valueStr[100], deviceUUID[36]; // UUID for the device
+extern char mqttUsername[MQTT_USERNAME_SIZE], msgsFeed[FEED_SIZE];
 extern unsigned int distance, prevDistance;
 extern bool serial;
 

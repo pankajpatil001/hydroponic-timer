@@ -41,10 +41,24 @@ void connectSubscribe(){
       if (client.connect("", mqttUsername, mqttKey)) {
         if(serial) Serial.println("connected");
         // ... and resubscribe
-        Serial.println(ON_TIME);
-        Serial.println(OFF_TIME);
-        client.subscribe("Umeshp99/feeds/on-time", 1);
-        client.subscribe("Umeshp99/feeds/off-time", 1);
+        // Serial.println(ON_TIME);
+        // Serial.println(OFF_TIME);
+        char onTopic[MQTT_USERNAME_SIZE + FEED_SIZE + 2]; // +2 FOR / AND \0
+        strcpy(onTopic, mqttUsername);
+        strcat(onTopic, "/");
+        strcat(onTopic, onTimeFeed);
+        Serial.print("Topic name: ");
+        Serial.println(onTopic);
+        char offTopic[MQTT_USERNAME_SIZE + FEED_SIZE + 2]; // +2 FOR / AND \0
+        strcpy(offTopic, mqttUsername);
+        strcat(offTopic, "/");
+        strcat(offTopic, offTimeFeed);
+        Serial.print("Topic name: ");
+        Serial.println(offTopic);
+        client.subscribe(onTopic, 1);
+        client.subscribe(offTopic, 1);
+        // client.subscribe("Umeshp99/feeds/on-time", 1);
+        // client.subscribe("Umeshp99/feeds/off-time", 1);
         // client.subscribe("patilect/feeds/+", 1);
   
         delay(1);
