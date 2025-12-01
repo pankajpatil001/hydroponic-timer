@@ -2,7 +2,7 @@
 
 void setup() {
   pinMode(LED, OUTPUT);
-  pinMode(waterPumpOn, OUTPUT); // Set relay pin as output
+  pinMode(waterPumpPin, OUTPUT); // Set relay pin as output
   
   pinMode(trigP, OUTPUT);  // Sets the trigPin as an Output
   pinMode(echoP, INPUT);   // Sets the echoPin as an Input

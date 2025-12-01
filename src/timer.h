@@ -9,6 +9,8 @@ extern bool waterPumpOn;
 extern unsigned int onTime, offTime, timerTime;
 extern unsigned long tkeepTimer, timer;
 extern PubSubClient client;
+extern char mqttUsername[MQTT_USERNAME_SIZE], msgsFeed[FEED_SIZE];
+extern char valueStr[100];
 
 void monitorTimer();
 
