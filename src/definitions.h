@@ -19,7 +19,7 @@ unsigned int distance, prevDistance=0;
 
 unsigned long tkeepUS = 500, tkeepUSpub = 500, tkeepRssi = 1000;
 unsigned long tkeepConnect=0, lastReconnectAttempt=0;
-unsigned int rssiTime = 6000;
+unsigned int rssiTime = 60000;
 unsigned int connectTime = 5000;
 unsigned int usTime = 5000, uspubTime = 10000;
 
